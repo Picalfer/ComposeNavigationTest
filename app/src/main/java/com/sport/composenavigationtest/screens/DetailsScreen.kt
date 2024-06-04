@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun DetailsScreen(
     word: String,
+    age: Int,
     onClick: () -> Unit
 ) {
     Toast.makeText(LocalContext.current, "hello", Toast.LENGTH_SHORT).show()
@@ -30,7 +31,7 @@ fun DetailsScreen(
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "List Screen -> $word", modifier = Modifier
+            text = "List Screen -> $word, $age", modifier = Modifier
                 .background(Color.Green)
                 .fillMaxWidth()
                 .clickable {
