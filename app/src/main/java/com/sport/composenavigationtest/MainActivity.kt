@@ -5,17 +5,18 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.sport.composenavigationtest.screens.DetailsScreen
+import com.sport.composenavigationtest.screens.ListScreen
+import com.sport.composenavigationtest.screens.PushScreen
+import com.sport.composenavigationtest.screens.SearchScreen
 import com.sport.composenavigationtest.ui.theme.ComposeNavigationTestTheme
 
 class MainActivity : ComponentActivity() {
@@ -46,9 +47,20 @@ class MainActivity : ComponentActivity() {
                         }
                     ) {
                         NavHost(navController = navController, startDestination = "list") {
-                            composable("list") { Text("list", modifier = Modifier.padding(24.dp)) }
-                            composable("search") { Text("search", modifier = Modifier.padding(24.dp)) }
-                            composable("push") { Text("push", modifier = Modifier.padding(24.dp)) }
+                            composable("list") {
+                                ListScreen {
+                                    navController.navigate("details/$it")
+                                }
+                            }
+                            composable("search") { SearchScreen() }
+                            composable("push") { PushScreen() }
+                            composable("details/{word}") { backStackEntry ->
+                                val word: String = backStackEntry.arguments?.getString("word") ?: ""
+                                DetailsScreen(word = word,
+                                    onClick = {
+                                        navController.navigate("list")
+                                    })
+                            }
                         }
                     }
                 }
